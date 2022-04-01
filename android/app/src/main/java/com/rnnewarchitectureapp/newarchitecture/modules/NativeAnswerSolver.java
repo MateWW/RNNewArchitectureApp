@@ -1,5 +1,7 @@
 package com.rnnewarchitectureapp.newarchitecture.modules;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -14,8 +16,25 @@ public class NativeAnswerSolver extends NativeAnswerSolverSpec {
     }
 
     @Override
-    public double answerTheUltimateQuestion(String input) {
-        return 42.0;
+    public double syncOne() {
+        Log.d("ReactNativeJS", "[syncOne] Running on thread: "+ Thread.currentThread().getName());
+        return 0;
+    }
+
+    @Override
+    public double syncTwo() {
+        Log.d("ReactNativeJS", "[syncTwo] Running on thread: "+ Thread.currentThread().getName());
+        return 0;
+    }
+
+    @Override
+    public void asyncOne() {
+        Log.d("ReactNativeJS", "[asyncOne] Running on thread: "+ Thread.currentThread().getName());
+    }
+
+    @Override
+    public void asyncTwo() {
+        Log.d("ReactNativeJS", "[asyncTwo] Running on thread: "+ Thread.currentThread().getName());
     }
 
     @NonNull

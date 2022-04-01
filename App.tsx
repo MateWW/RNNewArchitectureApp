@@ -30,7 +30,9 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import AnswerViewer, {Commands as AnswerViewerCommands} from './js/NativeAnswerViewer';
+import AnswerViewer, {
+  Commands as AnswerViewerCommands,
+} from './js/NativeAnswerViewer';
 import type {AnswerViewerViewType} from './js/NativeAnswerViewer';
 
 const Section: React.FC<{
@@ -72,17 +74,40 @@ const App = () => {
   const [step, setStep] = useState(1);
 
   const onPress = () => {
-    const theAnswer = NativeAnswerSolver?.answerTheUltimateQuestion("What's the Answer to the Ultimate Question of Life, the Universe, and Everything") || ""
-    console.log('The answer is: ' + theAnswer);
-    setStep(step+1);
-    AnswerViewerCommands.changeBackgroundColor(ref.current, "red");
+    console.log('[onPress] before asyncOne');
+    NativeAnswerSolver.asyncOne();
+    console.log('[onPress] before asyncTwo');
+    NativeAnswerSolver.asyncTwo();
+    console.log('[onPress] before syncOne');
+    NativeAnswerSolver.syncOne();
+    console.log('[onPress] before syncTwo');
+    NativeAnswerSolver.syncTwo();
+    console.log('[onPress] end');
+  };
+
+  const onPress2 = () => {
+    console.log('[onPress] before asyncOne');
+    NativeAnswerSolver.asyncOne();
+    console.log('[onPress] before syncOne');
+    NativeAnswerSolver.syncOne();
+    console.log('[onPress] before asyncTwo');
+    NativeAnswerSolver.asyncTwo();
+    console.log('[onPress] before syncTwo');
+    NativeAnswerSolver.syncTwo();
+    console.log('[onPress] end');
   };
 
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Button title="Click to invoke your Turbo Module!" onPress={onPress} />
-      <AnswerViewer ref={ref} style={{width: "100%", height: 50}} color="yellow" step={step} />
+      <Button title="Order 1" onPress={onPress} />
+      <Button title="Order 2" onPress={onPress2} />
+      <AnswerViewer
+        ref={ref}
+        style={{width: '100%', height: 50}}
+        color="yellow"
+        step={step}
+      />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
